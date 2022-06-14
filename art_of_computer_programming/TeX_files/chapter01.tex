@@ -3,9 +3,7 @@
 
 \qn{1.} [\textit{10}] The text showed how to interchange the values of variables $m$ and $n$, using the replacement notation, by setting $t \leftarrow m, \, m \leftarrow n, \, n \leftarrow t$. Show how the values of \textit{four} variables $(a, b, c, d)$ can be rearranged to $(b, c, d, a)$ by a sequence of replacements. Try to use the minimum number of replacements.
 
-\sol This can be accomplished in 3 replacements: $a \leftrightarrow d$ which results in $(d, b, c, a)$, $d \leftrightarrow b$ which results in $(b, d, c, a)$, and finally $d \leftrightarrow c$ which results in $(b, c, d, a)$.
-
-We can prove this is the minimum number of replacements in this way: suppose a sequence of two replacements resulted in the exchange. Since every index of the rearrangement is not equal to the same index of the initial ordering, it must be the case that the pair of replacements act on different pairs of variables. But no pair of variables in the rearrangement can be swapped to recover the initial state without further replacements. Thus there must be more than two replacements, and since a method of using three replacements was demonstrated, it is the minimum number. \qed
+\sol Use the sequence $t \leftarrow d, \, d \leftarrow a, \, a \leftarrow b, \, b \leftarrow c, \, c \leftarrow t$. This is the minimum number of replacements since every replacement correclty places a new variable in its spot, except for the assignment of $d$ to a dummy variable, which is required to not lose information of the value of $d$.\qed
 
 \qn{2.} [\textit{15}] Prove that $m$ is always greater than $n$ at the beginning of step E1, except possibly the first time this step occurs.
 
@@ -19,15 +17,31 @@ Suppose $m \geq n$. Then the remainder of $m / n$ is some integer $r$ such that 
 
 \qn{4.} [\textit{16}] What is the greatest common divisor of 2166 and 6099?
 
-\sol \qed
+\sol Working through Euclid's algorithm by hand, the remainder of 6099 / 2166 is 1767. The remainder of 2166 / 1767 is 399. The remainder of 1767 / 399 is 171. The remainder of 399 / 171 is 57. The remainder of 171 / 57 is 0. Thus the greatest common divisor of 2166 and 6099 is 57. Using the script at \verb|code/chapter01/euclid.py| confirms this answer.\qed
 
 \qn{5.} [\textit{12}] Show that the ``Procedure for Reading This Set of Books" that appears after the preface actually fails to be a genuine algorithm on at least three of our five counts! Also mention some differences in format between it and Algorithm E.
 
-\sol \qed
+\sol The procedure fails on finiteness, as once step 18 is reached, it loops back to step 3, with no exit condition. The procedure fails on definiteness, as the steps of reading and parsing chapters are very open to what best suits each person (what material to reread, what to skip, which questions to tackle, etc). The procedure fails on output, as it is impossible to measure precisely what a person gains by reading and studying the textbook (we have a vague notion of ``improved computer science knowledge,'' but we can't quantitatively measure this).
+
+Comparing to Algorithm E, the procedure is more loosely defined and is open to modification based on what suits a person's needs. It does not have precise conditions for moving between steps. Additionally, the network is more complex, as it involves moving between points based on personal understanding, rather than a precise step-by-step condition.\qed
 
 \qn{6.} [\textit{20}] What is $T_5$, the average number of times step E1 is performed when $n=5$?
 
-\sol \qed
+\sol We compute the number of times E1 is computed for $m \in [5]$.
+
+($n=1$) We have that $1 = 0\cdot 5 + 1$. Taking $m \leftarrow 5, \, n \leftarrow 1$, we have $5 = 5\cdot 1 + 0$, taking 2 steps.
+
+($n=2$) We have that $2 = 0\cdot 5 + 2$. Taking $m \leftarrow 5, \, n \leftarrow 2$, we have $5 = 2\cdot 2 + 1$. Taking $m \leftarrow 2, \, n \leftarrow 1$, we have $2 = 2\cdot 1 + 0$, taking 3 steps.
+
+($n=3$) We have that $3 = 0\cdot 5 + 3$. Taking $m \leftarrow 5, \, n \leftarrow 3$, we have $5 = 3\cdot 1 + 2$. Taking $m \leftarrow 3, \, n \leftarrow 2$, we have $3 = 2 \cdot 1 + 1$. Taking $m \leftarrow 2, \, n \leftarrow 1$, we have $2 = 1\cdot 2 + 0$, taking 4 steps.
+
+($n = 4$) We have that $4 = 0\cdot 5 + 4$. Taking $m \leftarrow 5, \, n \leftarrow 4$, we have $5 = 1\cdot 4 + 1$. Taking $m \leftarrow 4, \, n \leftarrow 1$, we have $4 = 4\cdot 1 + 0$, taking 3 steps.
+
+($n=5$) We have that $5 = 1\cdot 5 + 0$, taking 1 step.
+
+So, we have that $T_5 = (2 + 3 + 4 + 3 + 1) / 5 = 2.6$.\qed
+
+
 
 \qn{7.} [\textit{HM21}] Let $U_m$ be the average number of times that step E1 is executed in Algorithm E, if $m$ is known and $n$ is allowed to range over all positive integers. Show that $U_m$ is well defined. Is $U_m$ in any way related to $T_m$?
 
@@ -40,6 +54,8 @@ Suppose $m \geq n$. Then the remainder of $m / n$ is some integer $r$ such that 
 \qn{9.} [\textit{M30}] Suppose that $C_1 = (Q_1, I_1, \Omega_1, f_1)$ and $C_2 = (Q_2, I_2, \Omega_2, f_2)$ are computational methods. For example, $C_1$ might stand for Algorithm E as in Eqs (2), except that $m$ and $n$ are restricted in magnitude, and $C_2$ might stand for a computer program implementation of Algorithm E. (Thus $Q_1$ might be the set of all states of the matchine, i.e., all possible configurations of its memory and registers; $f_2$ might be the definition of single machine actions; and $I_2$ might be the set of initial states, each including the program that determines the greatest common divisor as well as the particular values of $m$ and $n$.)
 
 Formulate a set-theoretic definition for the concept ``$C_2$ is a representation of $C_1$'' or ``$C_2$ simulates $C_1$.'' This is to mean intuitively that any computation sequence of $C_1$ is mimicked by $C_2$, except that $C_2$ might take more steps in which to do the computation and it might retain more information in its states. (We thereby obtain a rigorous interpretation of the statement, ``Program $X$ is an implementation of Algorithm $Y$.'')
+
+\sol \qed
 
 \section{Mathematical Preliminaries}
 \subsection{Mathematical Induction}
