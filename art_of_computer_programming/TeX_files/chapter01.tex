@@ -68,25 +68,25 @@ Formulate a set-theoretic definition for the concept ``$C_2$ is a representation
 
 {\bf Theorem.} Let $a$ be any positive number. For all positive integers $n$ we have $a^{n-1} = 1$.
 
-\pf If $n = 1$, $a^{n-1} = a^{1-1} = a^{0} = 1$. And by induction, assuming that the theorem is true for $1, 2, \dots, n$, we have $$a^{(n+1) - 1} = a^n = {a^{n-1} \times a^{n-1} \over b^{n-1}} = {1 \times 1 \over 1} = 1, \qquad \text{where } b = a^{(n-2)/(n-1)};$$ so the theorem is true for $n+1$ as well.
+\pf If $n = 1$, $a^{n-1} = a^{1-1} = a^{0} = 1$. And by induction, assuming that the theorem is true for $1, 2, \dots, n$, we have $$a^{(n+1) - 1} = a^n = \frac{a^{n-1} \times a^{n-1}}{b^{n-1}} = \frac{1 \times 1}{1} = 1, \qquad \text{where } b = a^{(n-2)/(n-1)};$$ so the theorem is true for $n+1$ as well.
 
 \sol If $b = a^{(n-2)/(n-1)}$, then when proving the case for $n + 1 = 2$, we have a division by zero. Thus the assumption that the theorem is true for $1, 2, \dots, n$ does not hold \qed
 
-\qn{3.} [\textit{18}] The following proof by induction seems correct, but for some reason the equation for $n=6$ gives ${1 \over 2} + {1\over 6} + {1\over 12} + {1\over 20} + {1\over 30} = {5\over 6}$ on the left-hand side, and ${3\over 2} - {1\over 6} = {4\over 3}$ on the right-hand side. Can you find the mistake?
+\qn{3.} [\textit{18}] The following proof by induction seems correct, but for some reason the equation for $n=6$ gives $\frac{1}{2} + \frac{1}{6} + \frac{1}{12} + \frac{1}{20} + \frac{1}{30} = \frac{5}{6}$ on the left-hand side, and $\frac{3}{2} - \frac{1}{6} = \frac{4}{3}$ on the right-hand side. Can you find the mistake?
 
-{\bf Theorem.} $${1 \over 1\times 2} + {1 \over 2\times 3} + \cdots + {1 \over (n-1)\times n} = {3 \over 2} - {1 \over n}.$$
+{\bf Theorem.} $$\frac{1}{1\times 2} + \frac{1}{2\times 3} + \cdots + \frac{1}{(n-1)\times n} = \frac{3}{2} - \frac{1}{n}.$$
 
 \pf We use induction on $n$. For $n=1$, clearly $3/2 - 1/n = 1/(1\times 2)$; and, assuming that the theorem is true for $n$,
 \begin{align*}
-    {1 \over 1\times 2} + \cdots + &{1\over (n-1)\times n} + {1 \over n\times (n+1)} \\
-    &={3\over 2} - {1\over n} + \left({1 \over n} - {1 \over n+1}\right) = {3 \over 2} - {1 \over n+1}.
+    \frac{1}{1\times 2} + \cdots + &\frac{1}{(n-1)\times n} + \frac{1}{n\times (n+1)} \\
+    &=\frac{3}{2} - \frac{1}{n} + \left(\frac{1}{n} - \frac{1}{n+1}\right) = \frac{3}{2} - \frac{1}{n+1}.
 \end{align*}
 
-\sol The base case of $n=1$ is not ${1 \over 1\times 2} = {3 \over 2} - {1 \over 1}$, as on the left we are assuming $n=2$ and on the right assuming $n=1$. It would have to be ${1 \over 0\times 1} = {3 \over 2} - {1 \over 1}$, which is clearly invalid, or starting at $n=2$, it would have to be ${1 \over 1 \times 2} = {3 \over 2} - {1 \over 2}$, which is clearly not correct. \qed
+\sol The base case of $n=1$ is not $\frac{1}{1\times 2} = \frac{3}{2} - \frac{1}{1}$, as on the left we are assuming $n=2$ and on the right assuming $n=1$. It would have to be $\frac{1}{0\times 1} = \frac{3}{2} - \frac{1}{1}$, which is clearly invalid, or starting at $n=2$, it would have to be $\frac{1}{1 \times 2} = \frac{3}{2} - \frac{1}{2}$, which is clearly not correct. \qed
 
 \qn{4.} [\textit{20}] Prove that, in addition to Eq. (3), Fibonacci numbers satisfy $F_n \geq \phi^{n-2}$ for all positive integers $n$.
 
-\pf Let $n = 1$, then $1 \geq \phi^{-1} \approx {1 \over 1.618}$. Let $n=2$, then $2 \geq \phi^{0} = 1$. Suppose $F_n \geq \phi^{n-2}$ for all $1, \dots, n$. Then 
+\pf Let $n = 1$, then $1 \geq \phi^{-1} \approx \frac{1}{1.618}$. Let $n=2$, then $2 \geq \phi^{0} = 1$. Suppose $F_n \geq \phi^{n-2}$ for all $1, \dots, n$. Then 
 \begin{alignat*}{3}
     F_{n+1} &= F_{n} + F_{n-1} &&\text{by definition of Fibonacci numbers}\\
     &\geq \phi^{n-2} + \phi^{n-3} \qquad &&\text{by inductive hypothesis}\\
@@ -94,3 +94,7 @@ Formulate a set-theoretic definition for the concept ``$C_2$ is a representation
 \end{alignat*}
 
 This proves the inductive case, and thus $F_n \geq \phi^{n-2}$ for all positive integers $n$. \qed
+
+\qn{5.} [\textit{21}] A \textit{prime number} is an integer $> 1$ that has no positive integer divisors other than 1 and itself. Using this definition and mathematical induction, prove that every integer $n>1$ may be written as a product of one or more prime numbers, namely in the form $n = p_1 \dots p_k$ for some $k \geq 1$, where each of $p_1, \dots, p_k$ is prime. (A prime number is considered to be the ``product'' of a single prime, namely itself.)
+
+\pf 
