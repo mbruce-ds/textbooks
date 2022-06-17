@@ -26,10 +26,6 @@ int main(int argc, char* argv[]) {
         sscanf(argv[i+1], "%d", &array_to_sort[i]);
     }
 
-    for (int i = 0; i < array_len; i++){
-        printf("%d\n", array_to_sort[i]);
-    } 
-
     int * sorted_array = sort_array(array_to_sort, array_len);
     
     printf("Sorted array: ");
