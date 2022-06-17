@@ -1,4 +1,4 @@
-\chapter{Getting Started}
+\chapter{Getting Started}\,
 \section{Insertion sort}
 
 \qn{1.} Using Figure 2.2 as a model, illustrate the operation of \verb|INSERTION-SORT| on the array $A = \langle 31, 41, 59, 26, 41, 58\rangle$.
@@ -37,8 +37,38 @@ The implementation of this can be found in \newline\verb|code/c/chapter02/revers
 
 Write pseudocode for \textbf{linear search}, which scans through the sequence, looking for $v$. Using a loop invariant, prove that your algorithm is correct. Make sure that your loop invariant fulfills the three necessary properties.
 
-\sol \qed
+\sol The algorithm is as follows.
+
+\begin{Verbatim}[frame=single,numbers=left,samepage=true,label={LINEAR-SEARCH(A,v)}]
+for i = 1 to A.length
+    if A[i] == v
+        return i
+return NIL
+\end{Verbatim}
+
+The loop invariant can be stated as follows: At the start of each iteration of the for loop, the subarray $A[1..i-1]$ does not contain the value $v$. We will show this invariant has the three necessary properties to prove the correctness of the algorithm. Prior to the first loop, the subarray $A[1..0]$ is an empty array, which clearly does not contain $v$. Suppose the invariant is true after loop $i$, that is, $A[1..i]$ does not contain $v$. Then on loop $i+1$, if $A[i+1] == v$, the algorithm will exit, returning $i+1$. If the algorithm does not exit, the loop iteration completes and thus $A[1..i+1]$ does not contain $v$. When the loop terminates without the algorithm prematurely returning, that means that $v$ is not contained in $A[1..n]$, and thus \verb|NIL| is returned. So the loop invariant fulfills the necessary properties to prove correctness of the algorithm. \qed
 
 \qn{4.} Consider the problem of adding two $n$-bit binary integers, stored in two $n$-element arrays $A$ and $B$. The sum of the two integers should be stored in binary form in an $(n+1)$-element array $C$. State the problem formally and write pseudocode for adding the two integers.
 
-\sol \qed
+\sol Define the problems as follows:
+
+\textbf{Input:} Two sequences $A, B$ representing binary numbers, where the sequences are length $n$ and contain only 0 or 1. The endianness of $A,B$ should be defined, as it affects the algorithm to solve it. We will assume big-endian.
+
+\textbf{Output:} A length $n+1$ sequence representing the binary sum $A+B$.
+
+Write the algorithm solving the problem as follows:
+
+\begin{Verbatim}[frame=single,numbers=left,samepage=true,label={ADD(A,B)}]
+carry = 0
+for i = A.length to 1
+    sum = A[i] + B[i] + carry // Binary addition
+    if sum % 10 == 1 // Sum either 01 or 11
+        S[i+1] = 1
+    if sum >= 10 // Sum either 10 or 11
+        carry = 1
+    else
+        carry = 0
+S[0] = carry
+return S
+\end{Verbatim}
+\qed
