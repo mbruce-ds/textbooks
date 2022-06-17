@@ -1,6 +1,6 @@
 My personal solutions for the exercises for some textbooks I'm working through.
 
-No guarantee about the correctness or completeness of any of these solutions. I'm kind of an idiot.
+No guarantee about the correctness or completeness of any of these solutions, I'm working through this as any readers are presumably doing as well :)
 
 Currently working on:
 - Introduction to Algorithms - CLRS
