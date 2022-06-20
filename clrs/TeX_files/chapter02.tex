@@ -1,7 +1,7 @@
 \chapter{Getting Started}\,
 \section{Insertion sort}
 
-\qn{1.} Using Figure 2.2 as a model, illustrate the operation of \verb|INSERTION-SORT| on the array $A = \langle 31, 41, 59, 26, 41, 58\rangle$.
+\qn{2.1-1} Using Figure 2.2 as a model, illustrate the operation of\newline \verb|INSERTION-SORT| on the array $A = \langle 31, 41, 59, 26, 41, 58\rangle$.
 
 \sol First pass: key set to 41. \verb|A[1] = 31 < 41|, so the while loop breaks, and the second element stays put.
 
@@ -13,7 +13,7 @@ Fourth pass: Key set to 41. \verb|A[4] = 59 > 41|, so set \verb|A[5] = 59|. \ver
 
 Final pass: Key set to 58. \verb|A[5] = 59 > 58|, so set \verb|A[6] = 59|. \verb|A[4] =| \verb|41 < 58|, so the while loop breaks. Set \verb|[5] = 58|. The final sorted array is $\langle 26, 31, 41, 41, 58, 59\rangle$.\qed
 
-\qn{2.} Rewrite the \verb|INSERTION-SORT| procedure to sort into nonincreasing instead of nondecreasing order.
+\qn{2.1-2} Rewrite the \verb|INSERTION-SORT| procedure to sort into nonincreasing instead of nondecreasing order.
 
 \sol Rewrite the algorithm as follows.
 \begin{Verbatim}[frame=single,numbers=left,samepage=true,label=REVERSE-INSERTION-SORT(A)]
@@ -29,7 +29,7 @@ for j = 2 to A.length
 
 The implementation of this can be found in \newline\verb|code/<language>/chapter02/reverse_insertion_sort/|.\qed
 
-\qn{3.} Consider the \textbf{searching problem}:
+\qn{2.1-3} Consider the \textbf{searching problem}:
 
 \textbf{Input:} A sequence of $n$ numbers $A = \langle a_1, a_2, \dots, a_n \rangle$ and a value $v$.
 
@@ -48,7 +48,7 @@ return NIL
 
 The loop invariant can be stated as follows: At the start of each iteration of the for loop, the subarray $A[1..i-1]$ does not contain the value $v$. We will show this invariant has the three necessary properties to prove the correctness of the algorithm. Prior to the first loop, the subarray $A[1..0]$ is an empty array, which clearly does not contain $v$. Suppose the invariant is true after loop $i$, that is, $A[1..i]$ does not contain $v$. Then on loop $i+1$, if $A[i+1] == v$, the algorithm will exit, returning $i+1$. If the algorithm does not exit, the loop iteration completes and thus $A[1..i+1]$ does not contain $v$. When the loop terminates without the algorithm prematurely returning, that means that $v$ is not contained in $A[1..n]$, and thus \verb|NIL| is returned. So the loop invariant fulfills the necessary properties to prove correctness of the algorithm. \qed
 
-\qn{4.} Consider the problem of adding two $n$-bit binary integers, stored in two $n$-element arrays $A$ and $B$. The sum of the two integers should be stored in binary form in an $(n+1)$-element array $C$. State the problem formally and write pseudocode for adding the two integers.
+\qn{2.1-4} Consider the problem of adding two $n$-bit binary integers, stored in two $n$-element arrays $A$ and $B$. The sum of the two integers should be stored in binary form in an $(n+1)$-element array $C$. State the problem formally and write pseudocode for adding the two integers.
 
 \sol Define the problems as follows:
 
@@ -75,11 +75,11 @@ return S
 
 
 \section{Analyzing algorithms}
-\qn{1.} Express the function $n^3 / 1000 - 100n^2 - 100n + 3$ in terms of $\Theta$-notation.
+\qn{2.2-1} Express the function $n^3 / 1000 - 100n^2 - 100n + 3$ in terms of $\Theta$-notation.
 
 \sol Considering the informal definition of $\Theta$-notation in this chapter, we simply observe that  the $n^3 / 1000$ term is the leading term and dominates for large $n$, and drop the coefficient, expressing the function as $\Theta(n^3)$.\qed
 
-\qn{2.} Consider sorting $n$ numbers stored in array $A$ by first finding the smallest element of $A$ and exchanging it with the element in $A[1]$. Then find the second smallest element of $A$, and exchange it with $A[2]$. Continue in this manner for the first $n-1$ elements of $A$. Write pseudocode for this algorithm, which is known as \textbf{selection sort}. What loop invariant does this algorithm maintain? Why does it need to run for only the first $n-1$ elements, rather than for all $n$ elements? Give the best-case and worst-case running times of selection sort in $\Theta$-notation.
+\qn{2.2-2} Consider sorting $n$ numbers stored in array $A$ by first finding the smallest element of $A$ and exchanging it with the element in $A[1]$. Then find the second smallest element of $A$, and exchange it with $A[2]$. Continue in this manner for the first $n-1$ elements of $A$. Write pseudocode for this algorithm, which is known as \textbf{selection sort}. What loop invariant does this algorithm maintain? Why does it need to run for only the first $n-1$ elements, rather than for all $n$ elements? Give the best-case and worst-case running times of selection sort in $\Theta$-notation.
 
 \sol
 \begin{Verbatim}[frame=single,numbers=left,samepage=true,label={SELECTION-SORT(A)}]
@@ -99,10 +99,121 @@ See \verb|code/<language>/chapter02/selection_sort/| for implementation of this 
 The loop invariant that the outer loop maintains is that the subarray $A[1..j]$ is sorted. Informally, this holds because the minimum element is selected to the first index, the second smallest element is selected to the second index, and so forth through the first $j$ elements. The loop only needs to run for the first $n-1$ elements because after $n-1$ iterations, the largest element is necessarily in the final index, as the $n-i$th largest elements are already all fixed to the $i$th indices. The best case runtime is $\Theta(n^2)$, since even with an input list that is already sorted, there is no way to early stop either for loop, as all elements need to be checked to confirm each candidate element is the current minimum. The worst case is equivalently $\Theta(n^2)$, as the same checks as in the best case are still performed, but the current minimum and stored index are updated on each increment of the $i$ index (in $\Theta$ notation, this only adds a linear term which is already accounted for by the nested loop).
 \qed
 
-\qn{3.} Consider linear search again (see Exercise 2.1-3). How many elements of the input sequence need to be checked on the average, assuming that the element being searched for is equally likely to be any element in the array? How about in the worst case? What are the average-case and worst-case running times of linear search in $\Theta$ notation? Justify your answers.
+\qn{2.2-3} Consider linear search again (see Exercise 2.1-3). How many elements of the input sequence need to be checked on the average, assuming that the element being searched for is equally likely to be any element in the array? How about in the worst case? What are the average-case and worst-case running times of linear search in $\Theta$ notation? Justify your answers.
+
+\sol Assume the element to be checked is present in the array (otherwise no information is given on the ratio of present elements to non-present elements, and an average case is impossible to derive).  The average case is equal to $\sum_i^n p(i) \cdot i$, where $i$ is equal to each index. Since every index has equal probability to have the element, $p(i) = 1/n$. Thus, we have $\sum_i^n p(i) \cdot i = n(n+1) / (2n) = (n+1)/2$. In $\Theta$ notation, the average case is $\Theta(n)$ (strip away the coefficients / constants on the previous solution), and the worst case is $\Theta(n)$ (check $n$ indices).\qed
+
+\qn{2.2-4} How can we modify almost any algorithm to have a good best-case running time?
+
+\sol Have an initial check to verify if the input is the solution (e.g., if the input array to a sorting algorithm is sorted).\qed
+
+\section{Designing algorithms}
+
+\qn{2.3-1} Using Figure 2.4 as a model, illustrate the operation of merge sort on the array $A = \langle 3, 41, 52, 26, 38, 57, 9, 49 \rangle$.
 
 \sol \qed
 
-\qn{4.} How can we modify almost any algorithm to have a good best-case running time?
+\qn{2.2-2} Rewrite the \verb|MERGE| procedure so that it does not use sentinels, instead stopping once either array $L$ or $R$ has had all its elements copied back into $A$ and then copying the remainder of the other array back into $A$.
+
+\sol \qed
+
+\qn{2.2-3} Use mathematical induction to show that when $n$ is an exact power of 2, the solution of the recurrence $$T(n) = \begin{cases} 2 & \text{if } n = 2, \\ 2T(n/2) + n & \text{if } n = 2^k \text{, for } k > 1 \end{cases}$$ is $T(n) = n \lg n$.
+
+\sol \qed
+
+\qn{2.2-4} We can express insertion sort as a recursive procedure as follows. In order to sort $A[1..n]$, we recursively sort $A[1..n-1]$ and then insert $A[n]$ into the sorted array $A[1..n-1]$. Write a recurrence for the worst-case running time of this recursive version of insertion sort.
+
+\sol \qed
+
+\qn{2.2-5} Referring back to the searching problem (see Exercise 2.1-3), observe that if the sequence $A$ is sorted, we can check the midpoint of the sequence against $v$ and eliminate half of the sequence from further consideration. The \textbf{binary search} algorithm repeats this procedure, halving the size of the remaining portion of the sequence each time. Write pseudocode, either iterative or recursive, for binary search. Argue that the worst-case running time of binary search is $\Theta(\lg n)$.
+
+\sol \qed
+
+\qn{2.2-6} Observe that the \textbf{while} loop of lines 5-7 of the \verb|INSERTION SORT| procedure in Section 2.1 uses a linear search to scan (backward) through the sorted subarray $A[1..j-1]$. Can we use a binary search (see Exercise 2.3-5) instead to improve the overall worst-case running time of insertion sort to $\Theta(n \lg n)$?
+
+\sol \qed
+
+\qn{2.2-7*} Describe a $\Theta(n \lg n)$-time algorithm that, given a set $S$ of $n$ integers and another integer $x$, determines whether or not there exist two elements in $S$ whose sum is exactly $x$.
+
+\sol \qed
+
+\section{Problems}
+
+\qn{2-1} \textbf{Insertion sort on small arrays in merge sort}
+
+Although merge sort runs in $\Theta(n \lg n)$ worst-case time and insertion sort runs in $\Theta(n^2)$ worst-case time, the constant factors in insertion sort can make it faster in practice for small problem sizes on many machines. Thus, it makes sense to \textbf{coarsen} the leaves of the recursion by using insertion sort within the merge sort when subproblems become sufficiently small. Consider a modification to merge sort in which $n/k$ sublists of length $k$ are sorted using insertion sort and then merged using the standard merging mechanism, where $k$ is a value to be determined.
+
+\begin{enumerate}[(a)]
+    \item Show that insertion sort can sort the $n/k$ sublists, each of length $k$, in $\Theta(nk)$ worst-case time.
+    \item Show how to merge sublists in $\Theta(n \lg(n/k))$ worst-case time.
+    \item Give that the modified algorithm runs in $\Theta(nk + n\lg(n/k))$ worst-case time, what is the largest value of $k$ as a function of $n$ for which the modified algorithm has the same running time as standard merge sort, in terms of $\Theta$-notation?
+    \item How should we choose $k$ in practice?
+\end{enumerate}
+
+\sol \qed
+
+\qn{2-2} \textbf{Correctness of bubblesort}
+
+Bubblesort is a popular, but inefficient, sorting algorithm. It works by repeatedly swapping adjacent elements that are out of order.
+
+\,
+
+\begin{Verbatim}[frame=single,numbers=left,samepage=true,label={BUBBLESORT(A)}]
+for i = 1 to A.length - 1
+    for j = A.length downto i + 1
+        if A[j] < A[j - 1]
+            exchange A[j] with A[j - 1]
+\end{Verbatim}
+
+\begin{enumerate}[(a)]
+    \item Let $A'$ denote the output of \verb|BUBBLESORT|$(A)$. To prove that \verb|BUBBLESORT| is correct, we need to prove that it terminates and that \begin{equation}A'[1] \leq A'[2] \leq \cdots \leq A'[n],\end{equation} where $n = A.length$. In order to show that \verb|BUBBLESORT| actually sorts, what else do we need to prove?
+\end{enumerate}
+
+The next two parts will prove inequality (2.1).
+
+\begin{enumerate}[(a)]
+    \setcounter{enumi}{1}
+    \item State precisely a loop invariant for the \textbf{for} loop in lines 2-4, and prove that this loop invariant holds. Your proof should use the structure of the loop invariant proof presented in this chapter.
+    \item Using the termination condition of the loop invariant proved in part (b), state a loop invariant for the \textbf{for} loop in lines 1-4 that will allow you to prove inequality (2.1). Your proof should use the structure of the loop invariant proof presented in this chapter.
+    \item What is the worst-case running time of bubblesort? How does it compare to the running time of insertion sort?
+\end{enumerate}
+
+\sol \qed
+
+\qn{2-3} \textbf{Correctness of Horner's rule}
+
+The following code fragment implements Horner's rule for evaluating a polynomial
+
+\begin{align*}
+    P(x) &= \sum_{k=0}^n a_k x^k \\
+    &= a_0 + x(a_1 + x(a_2 + \cdots + x(a_{n-1} + xa_n)\cdots )),
+\end{align*}
+
+Given the coefficients $a_0, a_1, \dots, a_n$ and a value for $x$:
+\begin{Verbatim}[frame=single,numbers=left,samepage=true]
+y = 0
+for i = n downto 0
+    y = a_i + x * y
+\end{Verbatim}
+
+\begin{enumerate}[(a)]
+    \item In terms of $\Theta$-notation, what is the running time of this code fragment for Horner's rule?
+    \item Write pseudocode to implement the naive polynomial-evaluation algorithm that computes each term of the polynomial from scratch. What is the running time of this algorithm? How does it compare to Horner's rule?
+    \item Consider the following loop invariant: At the start of each iteration of the \textbf{for} loop of lines 2-3, $$y = \sum_{k=0}^{n - (i + 1)} a_{k+i+1}x^k.$$ Interpret a summation with no terms as equaling 0. Following the structure of the loop invariant proof presented in this chapter, use this loop invariant to show that, at termination, $y = \sum_{k=0}^n a_kx^k$.
+    \item Conclude by arguing that the given code fragment correctly evaluates a polynomial characterized by the coefficients $a_0, a_1, \dots, a_n$.
+\end{enumerate}
+
+\sol \qed
+
+\qn{2-4} \textbf{Inversions}
+
+Let $A[1..n]$ be an array of $n$ distinct numbers. If $i < j$ and $A[i] > A[j]$, then the pair $(i,j)$ is called an \textbf{inversion} of $A$.
+
+\begin{enumerate}[(a)]
+    \item List the five inversions of the array $\langle 2, 3, 8, 6, 1 \rangle$.
+    \item What array with elements from the set $\{1, 2, \dots, n\}$ has the most inversions? How many does it have?
+    \item What is the relationship between the running time of insertion sort and the number of inversions in the input array? Justify your answer.
+    \item Give an algorithm that determines the number of inversions in any permutation on $n$ elements in $\Theta(n \lg n)$ worst-case time. (\textit{Hint:} Modify merge sort.)
+\end{enumerate}
 
 \sol \qed
