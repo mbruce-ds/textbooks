@@ -111,29 +111,56 @@ The loop invariant that the outer loop maintains is that the subarray $A[1..j]$ 
 
 \qn{2.3-1} Using Figure 2.4 as a model, illustrate the operation of merge sort on the array $A = \langle 3, 41, 52, 26, 38, 57, 9, 49 \rangle$.
 
+\sol The initial array of $\langle 3, 41, 52, 26, 38, 57, 9, 49\rangle$ gets split up into arrays of length 1. Then, the arrays are paired off in order and merged together, to form $\langle 3, 41, 26, 52, 38, 57, 9, 49\rangle$. Then, pairs are combined into 4 to give $\langle 3, 26, 41, 52, 9, 38, 49, 57\rangle$. Then, the two sets of 4 are merged to get the final sorted array of $\langle3, 9, 26, 38, 41, 49, 52, 57\rangle$\qed
+
+\qn{2.3-2} Rewrite the \verb|MERGE| procedure so that it does not use sentinels, instead stopping once either array $L$ or $R$ has had all its elements copied back into $A$ and then copying the remainder of the other array back into $A$.
+
+\sol \begin{Verbatim}[frame=single,numbers=left,samepage=true,label={MERGE(A, p, q, r)}]
+n_1 = q - p + 1
+n_2 = r - q
+let L[1..n_1 + 1] and R[1..n_2 + 1] be new arrays
+for i = 1 to n_1
+    L[i] = A[p + i - 1]
+for j = 1 to n_2
+    R[j] = A[q + j]
+
+\end{Verbatim}
+\qed
+
+\qn{2.3-3} Use mathematical induction to show that when $n$ is an exact power of 2, the solution of the recurrence $$T(n) = \begin{cases} 2 & \text{if } n = 2, \\ 2T(n/2) + n & \text{if } n = 2^k \text{, for } k > 1 \end{cases}$$ is $T(n) = n \lg n$.
+
+\sol Let $k = 1$. Then by definition of $T$, $T(2) = 2 = 2 \lg 2$.
+
+Suppose the hypothesis is true for $k = m$. Let $k = m+1$. We find that $T(2^{m+1}) = 2T(2^{m+1}/2) + 2^{m+1} = 2T(2^m) + 2^{m+1} = 2\cdot 2^m \lg 2^m + 2^{m+1} = m\cdot 2^{m+1} + 2^{m+1} = (m+1)2^{m+1} = 2^{m+1} \lg 2^{m+1}$. This proves the inductive hypothesis, and thus the result is true for all $k \in \Z^+$, or when $n$ is a power of 2. \qed
+
+\qn{2.3-4} We can express insertion sort as a recursive procedure as follows. In order to sort $A[1..n]$, we recursively sort $A[1..n-1]$ and then insert $A[n]$ into the sorted array $A[1..n-1]$. Write a recurrence for the worst-case running time of this recursive version of insertion sort.
+
+\sol $$T(n) = \begin{cases}
+    1 & \text{if } n=1, \\
+    T(n-1) + (n-1)& \text{if } n \geq 2.
+\end{cases}$$
+This follows from considering the worst case of inserting $A[n]$ into sorted $A[1..n-1]$: needing to swap $A[n]$ with every index until it is at the first index. This yields $n-1$ swaps, in addition to all swaps to sort $A[1..n-1]$. Solving the recurrence is done by summing all integers from 1 to $n-1$, yielding $\Theta(n^2)$.\qed
+
+\qn{2.3-5} Referring back to the searching problem (see Exercise 2.1-3), observe that if the sequence $A$ is sorted, we can check the midpoint of the sequence against $v$ and eliminate half of the sequence from further consideration. The \textbf{binary search} algorithm repeats this procedure, halving the size of the remaining portion of the sequence each time. Write pseudocode, either iterative or recursive, for binary search. Argue that the worst-case running time of binary search is $\Theta(\lg n)$.
+
+\sol \begin{Verbatim}[frame=single,numbers=left,samepage=true,label={BINARY-SEARCH(A, v, p, q)}]
+if p == q and A[p] != v
+    return NIL
+midpoint = floor((p + q) / 2)
+if A[midpoint] == v
+    return midpoint
+if A[midpoint] > v
+    return BINARY-SEARCH(A, v, p, midpoint)
+return BINARY-SEARCH(a, v, midpoint, q)
+\end{Verbatim}
+The worst case is when the element is not in the list, in which case the array size must halve until it is one element large and the element is not the value to search for, returning \verb|NIL|. Halving $A$ this way to a size of one element takes $\lg n$ steps, so the procedure takes $\Theta(\lg n)$ time.
+\qed
+
+\qn{2.3-6} Observe that the \textbf{while} loop of lines 5-7 of the \verb|INSERTION SORT| procedure in Section 2.1 uses a linear search to scan (backward) through the sorted subarray $A[1..j-1]$. Can we use a binary search (see Exercise 2.3-5) instead to improve the overall worst-case running time of insertion sort to $\Theta(n \lg n)$?
+
 \sol \qed
 
-\qn{2.2-2} Rewrite the \verb|MERGE| procedure so that it does not use sentinels, instead stopping once either array $L$ or $R$ has had all its elements copied back into $A$ and then copying the remainder of the other array back into $A$.
-
-\sol \qed
-
-\qn{2.2-3} Use mathematical induction to show that when $n$ is an exact power of 2, the solution of the recurrence $$T(n) = \begin{cases} 2 & \text{if } n = 2, \\ 2T(n/2) + n & \text{if } n = 2^k \text{, for } k > 1 \end{cases}$$ is $T(n) = n \lg n$.
-
-\sol \qed
-
-\qn{2.2-4} We can express insertion sort as a recursive procedure as follows. In order to sort $A[1..n]$, we recursively sort $A[1..n-1]$ and then insert $A[n]$ into the sorted array $A[1..n-1]$. Write a recurrence for the worst-case running time of this recursive version of insertion sort.
-
-\sol \qed
-
-\qn{2.2-5} Referring back to the searching problem (see Exercise 2.1-3), observe that if the sequence $A$ is sorted, we can check the midpoint of the sequence against $v$ and eliminate half of the sequence from further consideration. The \textbf{binary search} algorithm repeats this procedure, halving the size of the remaining portion of the sequence each time. Write pseudocode, either iterative or recursive, for binary search. Argue that the worst-case running time of binary search is $\Theta(\lg n)$.
-
-\sol \qed
-
-\qn{2.2-6} Observe that the \textbf{while} loop of lines 5-7 of the \verb|INSERTION SORT| procedure in Section 2.1 uses a linear search to scan (backward) through the sorted subarray $A[1..j-1]$. Can we use a binary search (see Exercise 2.3-5) instead to improve the overall worst-case running time of insertion sort to $\Theta(n \lg n)$?
-
-\sol \qed
-
-\qn{2.2-7*} Describe a $\Theta(n \lg n)$-time algorithm that, given a set $S$ of $n$ integers and another integer $x$, determines whether or not there exist two elements in $S$ whose sum is exactly $x$.
+\qn{2.3-7*} Describe a $\Theta(n \lg n)$-time algorithm that, given a set $S$ of $n$ integers and another integer $x$, determines whether or not there exist two elements in $S$ whose sum is exactly $x$.
 
 \sol \qed
 
