@@ -158,11 +158,23 @@ The worst case is when the element is not in the list, in which case the array s
 
 \qn{2.3-6} Observe that the \textbf{while} loop of lines 5-7 of the \verb|INSERTION SORT| procedure in Section 2.1 uses a linear search to scan (backward) through the sorted subarray $A[1..j-1]$. Can we use a binary search (see Exercise 2.3-5) instead to improve the overall worst-case running time of insertion sort to $\Theta(n \lg n)$?
 
-\sol \qed
+\sol It could be implemented, but it would not improve the running time to $\Theta(n \lg n)$. Once the index that $A[j]$ is to be inserted in is found, say index $i$, the elements of the subarray $A[i..j-1]$ still need to be shifted into $A[i+1..j]$. This will involve a nested loop that, in worst case, will still iterate over the entire subarray $A[1..j-1]$, so the running time will still be $\Theta(n \lg n)$.\qed
 
 \qn{2.3-7*} Describe a $\Theta(n \lg n)$-time algorithm that, given a set $S$ of $n$ integers and another integer $x$, determines whether or not there exist two elements in $S$ whose sum is exactly $x$.
 
-\sol \qed
+\sol Name this procedure \verb|PAIR-TO-SUM|. The pseudocode for this procedure is given by the following.
+\begin{Verbatim}[frame=single,numbers=left,samepage=true,label={PAIR-TO-SUM(S, x)}]
+n = S.size
+for i=1 to n
+    value = x - S[i]
+    subarray = Union(S[1..i-1], S[i+1..n])
+    j = BINARY-SEARCH(subarray, value, 1, n)
+    if j != NIL
+        return i, j
+return NIL
+\end{Verbatim}
+This procedure iterates over the $n$ elements of $S$, binary searching for the unique element that would sum to $x$. Binary search is $\Theta(\lg n)$, and it is called $n$ times in worst case, so this procedure is $\Theta(n \lg n)$.
+\qed
 
 \section{Problems}
 
@@ -173,11 +185,16 @@ Although merge sort runs in $\Theta(n \lg n)$ worst-case time and insertion sort
 \begin{enumerate}[(a)]
     \item Show that insertion sort can sort the $n/k$ sublists, each of length $k$, in $\Theta(nk)$ worst-case time.
     \item Show how to merge sublists in $\Theta(n \lg(n/k))$ worst-case time.
-    \item Give that the modified algorithm runs in $\Theta(nk + n\lg(n/k))$ worst-case time, what is the largest value of $k$ as a function of $n$ for which the modified algorithm has the same running time as standard merge sort, in terms of $\Theta$-notation?
+    \item Given that the modified algorithm runs in $\Theta(nk + n\lg(n/k))$ worst-case time, what is the largest value of $k$ as a function of $n$ for which the modified algorithm has the same running time as standard merge sort, in terms of $\Theta$-notation?
     \item How should we choose $k$ in practice?
 \end{enumerate}
 
-\sol \qed
+\sol \begin{enumerate}[(a)]
+    \item There exist $n/k$ sublists of length $k$. With insertion sort, each sublist takes $\Theta(k^2)$ time to sort. Since we do this $\Theta(k^2)$ operation $n/k$ times, we multiply to find the worst time for insertion sort to sort all sublists is $\Theta(nk)$.
+    \item Perform the same steps as in normal merge sort, but since the branching tree of sublists is only $\lg (n/k)$ iterations deep instead of $ \lg n$, merging the sublists takes $\Theta(n \lg (n/k))$ time.
+    \item The threshold is $k = \lg n$, at which point the first part of the sum will begin to dominate as $k$ gets larger.
+    \item We can choose some constant value which isn't too large, for instance $k=64$.
+\end{enumerate}\qed
 
 \qn{2-2} \textbf{Correctness of bubblesort}
 
@@ -187,7 +204,7 @@ Bubblesort is a popular, but inefficient, sorting algorithm. It works by repeate
 
 \begin{Verbatim}[frame=single,numbers=left,samepage=true,label={BUBBLESORT(A)}]
 for i = 1 to A.length - 1
-    for j = A.length downto i + 1
+    for j = A.length to i + 1
         if A[j] < A[j - 1]
             exchange A[j] with A[j - 1]
 \end{Verbatim}
@@ -243,4 +260,9 @@ Let $A[1..n]$ be an array of $n$ distinct numbers. If $i < j$ and $A[i] > A[j]$,
     \item Give an algorithm that determines the number of inversions in any permutation on $n$ elements in $\Theta(n \lg n)$ worst-case time. (\textit{Hint:} Modify merge sort.)
 \end{enumerate}
 
-\sol \qed
+\sol \begin{enumerate}[(a)]
+    \item The inversions are $(1, 5), (2, 5), (3, 5), (4, 5), (3, 4)$.
+    \item The array with the most inversions is the reverse sorted array: $[n, n-1, \dots, 2, 1]$. It has $n-1$ inversions for the first element, $n-2$ for the second, and so forth, for a total of $1 + 2 + \dots + n-1 = n(n-1)/2$.
+    \item Insertion sort works by iterating through each element in the array, undoing every inversion an element has with elements appearing prior to it in the array. Thus, if $I(A)$ is a formula for the number of inversions in an array, the running time of insertion sort is equal to $I(A) + \Theta(n)$, where the code to maintain the state of the procedure is $\Theta(n)$.
+    \item Take merge sort, and add to a counter for every element added to the array from the right array before all elements from the left are depleted. Return this count for every subprocess, and add these counts together to get the total number of inversions.
+\end{enumerate}\qed
