@@ -135,10 +135,7 @@ Suppose the hypothesis is true for $k = m$. Let $k = m+1$. We find that $T(2^{m+
 
 \qn{2.3-4} We can express insertion sort as a recursive procedure as follows. In order to sort $A[1..n]$, we recursively sort $A[1..n-1]$ and then insert $A[n]$ into the sorted array $A[1..n-1]$. Write a recurrence for the worst-case running time of this recursive version of insertion sort.
 
-\sol $$T(n) = \begin{cases}
-    1 & \text{if } n=1, \\
-    T(n-1) + (n-1)& \text{if } n \geq 2.
-\end{cases}$$
+\sol $$T(n) = T(n-1) + (n-1)$$
 This follows from considering the worst case of inserting $A[n]$ into sorted $A[1..n-1]$: needing to swap $A[n]$ with every index until it is at the first index. This yields $n-1$ swaps, in addition to all swaps to sort $A[1..n-1]$. Solving the recurrence is done by summing all integers from 1 to $n-1$, yielding $\Theta(n^2)$.\qed
 
 \qn{2.3-5} Referring back to the searching problem (see Exercise 2.1-3), observe that if the sequence $A$ is sorted, we can check the midpoint of the sequence against $v$ and eliminate half of the sequence from further consideration. The \textbf{binary search} algorithm repeats this procedure, halving the size of the remaining portion of the sequence each time. Write pseudocode, either iterative or recursive, for binary search. Argue that the worst-case running time of binary search is $\Theta(\lg n)$.
@@ -164,6 +161,7 @@ The worst case is when the element is not in the list, in which case the array s
 
 \sol Name this procedure \verb|PAIR-TO-SUM|. The pseudocode for this procedure is given by the following.
 \begin{Verbatim}[frame=single,numbers=left,samepage=true,label={PAIR-TO-SUM(S, x)}]
+S = MERGE-SORT(S)
 n = S.size
 for i=1 to n
     value = x - S[i]
@@ -173,7 +171,7 @@ for i=1 to n
         return i, j
 return NIL
 \end{Verbatim}
-This procedure iterates over the $n$ elements of $S$, binary searching for the unique element that would sum to $x$. Binary search is $\Theta(\lg n)$, and it is called $n$ times in worst case, so this procedure is $\Theta(n \lg n)$.
+First, this procedure calls \verb|MERGE-SORT|, which is $\Theta(n \lg n)$. Then, this procedure iterates over the $n$ elements of $S$, binary searching for the unique element that would sum to $x$. Binary search is $\Theta(\lg n)$, and it is called $n$ times in worst case, so this procedure is $\Theta(n \lg n)$.
 \qed
 
 \section{Problems}
