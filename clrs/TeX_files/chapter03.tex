@@ -3,17 +3,31 @@
 
 \qn{3.1-1} Let $f(n)$ and $g(n)$ be asymptotically nonnegative functions. Using the basic definition of $\Theta$-notation, prove that $\max(f(n), g(n)) = \Theta(f(n) + g(n))$.
 
-\sol \qed
+\sol Recall that $$\max(f(n), g(n)) = \frac{f(n) + g(n) + |f(n) - g(n)|}{2}$$ and that $$0 \leq |f(n) - g(n)| \leq |f(n)| + |g(n)|.$$ Substituting these in to the definition of $\Theta(f(n) + g(n))$ yields
+\begin{alignat*}{2}
+    0 \leq c_1 (f(n) + g(n)) \leq & \max(f(n), g(n)) &&\leq c_2(f(n) + g(n)), \\
+    2c_1(f(n) + g(n)) \leq & f(n) + g(n) + |f(n) - g(n)| &&\leq 2c_2 (f(n) + g(n)). \\
+\end{alignat*}
+Setting $c_1 = 1/2$ and $c_2 = 1$ yields the desired inequality, as follows by the inequalities with $|f(n) - g(n)|$ above.\qed
 
 \qn{3.1-2}
 
 Show that for any real constants $a$ and $b$, where $b > 0$, $$(n+a)^b = \Theta(n^b).$$
 
-\sol \qed
+\sol For $(n+a)^b = \Theta(n^b)$, we need to show that there exist $c_1, c_2, n_0 > 0$ such that $0 \leq c_1 n^b \leq (n + a)^b \leq c_2n^b$. We can manipulate this inequality to yield
+\begin{alignat*}{2}
+    c_1 n^b \leq \, &(n + a)^b &&\leq c_2 n^b, \\
+    c_1 \leq \, &\frac{(n+a)^b}{n^b} &&\leq c_2, \\
+    c_1 \leq \, &\left(\frac{n+a}{n}\right)^b &&\leq c_2, \\
+    \sqrt[b]{c_1} \leq \, &1 + \frac{a}{n} &&\leq \sqrt[b]{c_2}, \\
+    \sqrt[b]{c_1} - 1 \leq \, &\frac{a}{n} &&\leq \sqrt[b]{c_2} - 1.
+\end{alignat*}
+If $a \geq 0$, then setting $c_1 = 1$, $c_2 = (a + 1)^b$, for $n_0 = 1$, the inequality is satisfied. If $a < 0$, then for $c_1 = \frac{1}{2^b}$, $c_2 = 1$, and $n_0 > -2a$, the inequality is satisfied.\qed
+
 
 \qn{3.1-3} Explain why the statement, ``The running time of the algorithm $A$ is at least $O(n^2)$'' is meaningless.
 
-\sol \qed
+\sol $O$-notation provides an asymptotic upper bound for a function, that is, that $f(n) \leq cg(n)$ for all $n \geq N_0$. To say that a function is ``at least $O(n^2)$'' would imply that a function is greater than some upper bound in $O(n^2)$, which gives no information. For example, it can be greater than a constant $g(n) = c \in O(n^2)$. (the wording for this question being so confusing is why I hate the abuse of notation saying a function ``is'' $O(f(n))$ rather than a function is ``in'' $O(f(n))$... like what does it mean for the running time to be at least a set? Or maybe that's the point.)\qed
 
 \qn{3.1-4} Is $2^{n+1} = O(2^n)$? Is $2^{2n} = O(2^n)$?
 
