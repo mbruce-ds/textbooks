@@ -31,19 +31,25 @@ If $a \geq 0$, then setting $c_1 = 1$, $c_2 = (a + 1)^b$, for $n_0 = 1$, the ine
 
 \qn{3.1-4} Is $2^{n+1} = O(2^n)$? Is $2^{2n} = O(2^n)$?
 
-\sol \qed
+\sol Since $2^{n+1} = 2\cdot 2^n$, we have $2^{n+1} = O(2^n)$ by choice of $c = 2, \, n_0 = 1$.
+
+Since $2^{2n} = 2^n \cdot 2^n$, for $2^{2n} = O(2^n)$ we would need some constant $c$ such that $2^{2n} \leq c\cdot 2^n \implies 2^n \leq c$, which is not true for any constant choice of $c$ for all $n \geq n_0$ for any $n_0$. Thus $2^{2n} \neq O(2^n).$\qed
 
 \qn{3.1-5} Prove Theorem 3.1.
 
-\pf \qed
+\pf Suppose $f(n) = \Theta(g(n))$. Then there exist $c_1, c_2, n_0$ such that $0 \leq c_1 g(n) \leq f(n) \leq c_2 g(n)$ for all $n \geq n_0$. It is then clear that for $c = c_1, n_0 = n_0$, we have $0 \leq f(n) \leq c g(n)$, so $f(n) = O(g(n))$ and for $c = c_2, n_0 = n_0$, we have $0 \leq c g(n) \leq f(n)$, so $f(n) = \Omega(g(n))$.
+
+Suppose $f(n) = O(g(n))$ and $f(n) = \Omega(g(n))$. Let $(c_O, n_O)$ be a choice of $c, n_0$ satisfying $f(n) = O(g(n))$ and let $(c_\Omega, n_\Omega)$ be a choice of $c, n_0$ satisfying $f(n) = \Omega(g(n))$. Choose $n_0 = \max\{n_O, n_\Omega\}$, $c_1 = C_\Omega$, and $c_2 = C_O$. For these choices of constants we have that $0 \leq c_1 g(n) \leq f(n) \leq c_2 g(n)$ for all $n \geq n_0$, and thus $f(n) = \Theta(g(n))$.\qed
 
 \qn{3.1-6} Prove that the running time of an algorithm is $\Theta(g(n))$ if and only if its worst-case running time is $O(g(n))$ and its best-case running time is $\Omega(g(n))$.
 
-\pf \qed
+\pf Suppose the running time $f(n)$ of an algorithm is $\Theta(g(n))$. Then $f(n) \in O(g(n))$ and $f(n) \in \Omega(g(n))$. By the former, we have that $0 \leq f(n) \leq cg(n)$, so the runtime can't get any worse than $O(g(n))$, and by the latter we have that $0 \leq cg(n) \leq f(n)$, so the runtime can't get any better than $\Omega(g(n))$. 
+
+Suppose the running time of an algorithm $f(n)$ has worst-case running time $O(g(n))$ and best-case running time $\Omega(g(n))$. By the former, we have $f(n) \leq cg(n)$ (runtime can't get any worse than $g(n)$), and by the latter we have $c'g(n) \leq f(n)$ (runtime can't get any better than $g(n)$). Together this clearly yields that $f(n) = \Theta(g(n))$. \qed
 
 \qn{3.1-7} Prove that $o(g(n)) \cap \omega(g(n))$ is the empty set.
 
-\pf \qed
+\pf Suppose $f \in o(g(n)) \cap \omega(g(n))$. Since $f \in o(g(n))$, for any $c > 0$ there exists $n_0$ such that $0 \leq f(n) < cg(n)$. Since $f \in \omega(g(n))$, for any $c > 0$ there exists $n'_0$ such that $0 \leq cg(n) < f(n)$. Take $N = \max\{n_0, n'_0\}$. Then for all $n \geq N$, we have $0 \leq cg(n) < f(n) < cg(n)$, a contradiction.\qed
 
 \qn{3.1-8} We can extend our notation to the case of two parameters $n$ and $m$ that can go to infinity independently at different rates. For a given function $g(n,m)$, we denote by $O(g(n,m))$ the set of functions
 \begin{align*}
@@ -53,7 +59,18 @@ If $a \geq 0$, then setting $c_1 = 1$, $c_2 = (a + 1)^b$, for $n_0 = 1$, the ine
 \end{align*}
 Give corresponding definitions for $\Omega(g(n,m))$ and $\Theta(g(n,m))$.
 
-\sol \qed
+\sol 
+\begin{align*}
+    \Omega(g(n,m)) = \{f(n,m) \, : \, & \text{there exist positive constants } c, n_0, \text{ and } m_0 \\
+    & \text{such that } 0 \leq cg(n,m) \leq f(n,m) \\
+    & \text{for all } n \geq n_0 \text{ or } m \geq m_0\}.
+\end{align*}
+
+\begin{align*}
+    \Theta(g(n,m)) = \{f(n,m) \, : \, & \text{there exist positive constants } c_1, c_2, n_0, \text{ and } m_0 \\
+    & \text{such that } 0 \leq c_1 g(n,m) \leq f(n,m) \leq c_2 g(n,m) \\
+    & \text{for all } n \geq n_0 \text{ or } m \geq m_0\}.
+\end{align*}\qed
 
 \section{Standard notations and common functions}
 
