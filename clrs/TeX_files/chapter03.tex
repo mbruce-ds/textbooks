@@ -76,15 +76,31 @@ Give corresponding definitions for $\Omega(g(n,m))$ and $\Theta(g(n,m))$.
 
 \qn{3.2-1} Show that if $f(n)$ and $g(n)$ are monotonically increasing functions, then so are the functions $f(n) + g(n)$ and $f(g(n))$, and if $f(n)$ and $g(n)$ are in addition nonnegative, then $f(n) \cdot g(n)$ is monotonically increasing.
 
-\sol \qed
+\sol Suppose $f, g$ are monotonically increasing, so $m \leq n$ implies $f(m) \leq f(n)$ and $g(m) \leq g(n)$. Then we have that $f(m) + g(m) \leq f(n) + g(m) \leq f(n) + g(n)$, so $f + g$ is monotonically increasing. In addition, since $m \leq n$ implies $g(m) \leq g(n)$, plugging this in to $f$ (which is monotonically increasing) yields $f(g(m)) \leq f(g(n))$, so $f\circ g$ is monotonically increasing.\qed
 
 \qn{3.2-2} Prove equation (3.16)
 
-\pf \qed
+\pf
+\begin{align*}
+    a^{\log_b c} &= b^{\left(\log_b a^{\log_b c}\right)} \\
+    &= b^{\left(\log_b a \log_b c\right)} \\
+    &= b^{\left(\log_b c^{\log_b a}\right)} \\
+    &= c^{\log_b a}.
+\end{align*}\qed
 
 \qn{3.2-3} Prove equation (3.19). Also prove that $n! = \omega(2^n)$ and $n! = o(n^n)$.
 
-\pf \qed
+\pf By Stirling's approximation, we have
+\begin{align*}
+    \lg (n!) &= \lg\left(\sqrt{2\pi n} \left(\frac{n}{e}\right)^n \left(1 + \Theta\left(\frac{1}{n}\right)\right)\right)\\
+    &= \lg(\sqrt{2\pi n}) + n (\lg n - \lg e) + \lg\left(1 + \Theta\left(\frac{1}{n}\right)\right)\\
+    &= \Theta(n \lg n).
+\end{align*}
+
+For $n! = \omega(2^n)$, let $c > 0$ and let $n_0 = \max\{2\cdot\lceil c\rceil, 4\}$. Observe that for all $n \geq n_0$, $n! = n\cdot(n-1)\cdots n_0 \cdots 2\cdot 1 = 2(n \cdot (n-1) \cdots (n_0 / 2) \cdots 2 \cdot 1) > 2(2\cdot 2 \cdots 2\cdot 1) = 2^n$.
+
+For $n! = o(n^n)$, let $c > 0$ and let $n_0 = \max\{2\cdot \lceil c \rceil, 4\}$. Observe that for all $n \geq n_0$, $n! = n\cdot (n-1) \cdots n_0 \cdots 2 \cdot 1 < c (n \cdots c \cdots 2 \cdot 1) < c\cdot n^n$, thus $n! = o(n^n)$.
+\qed
 
 \qn{3.2-4 *} Is the function $\lceil \lg n \rceil !$ polynomially bounded? Is the function $\lceil \lg \lg n \rceil !$ polynomially bounded?
 
@@ -96,15 +112,27 @@ Give corresponding definitions for $\Omega(g(n,m))$ and $\Theta(g(n,m))$.
 
 \qn{3.2-6} Show that the golden ratio $\phi$ and its conjugate $\hat{\phi}$ both satisfy the equation $x^2 = x + 1$.
 
-\sol \qed
+\sol Given $\phi = \frac{1 + \sqrt{5}}{2}$, we have $\phi^2 = \frac{3}{2} + \frac{\sqrt{5}}{2} = \frac{1 + \sqrt{5}}{2} + 1$. Thus, $\phi$ satisfies $x^2 = x + 1$.
+
+Given $\hat\phi = \frac{1 - \sqrt{5}}{2}$, we have $\hat\phi^2 = \frac{3}{2} - \frac{\sqrt{5}}{2} = 1 + \frac{1 - \sqrt{5}}{2}$. Thus, $\hat\phi$ satisfies $x^2 = x + 1$.\qed
 
 \qn{3.2-7} Prove by induction that the $i$th Fibonacci number satisfies the equality $$F_i = \frac{\phi^i - \hat{\phi}^i}{\sqrt{5}},$$ where $\phi$ is the golden ratio and $\hat{\phi}$ is its conjugate.
 
-\pf \qed
+\pf For $n = 0$, we have $F_0 = \frac{1 - 1}{\sqrt{5}} = 0$, as desired. For $n = 1$, we have $F_1 = \frac{\phi - \hat\phi}{\sqrt{5}} = \frac{\frac{1}{2} + \frac{\sqrt{5}}{2} - \frac{1}{2} + \frac{\sqrt{5}}{2}}{\sqrt{5}} = 1$, as desired.
+
+Suppose the equality is true for all $n \leq N$. Let $n = N+1$. Notice that by question 3.2-6, $\phi$ and $\hat \phi$ satisfy $x^{N+1} = x^N + x^{N-1}$. Then we have
+\begin{align*}
+    F_{N+1} &= F_N + F_{N-1} \\
+    &= \frac{\phi^N - \hat\phi^N}{\sqrt{5}} + \frac{\phi^{N-1} - \hat\phi^{N-1}}{\sqrt{5}} \\
+    &= \frac{\phi^N + \phi^{N-1} - (\hat\phi^N + \hat\phi^{N-1})}{\sqrt{5}} \\
+    &= \frac{\phi^{N+1} - \hat\phi^{N+1}}{\sqrt{5}}.
+\end{align*}
+
+Thus, by induction, $F_i = \frac{\phi^i - \hat\phi^i}{\sqrt{5}}$ as desired.\qed
 
 \qn{3.2-8} Show that $k \ln k = \Theta(n)$ implies $k = \Theta(n / \ln n)$.
 
-\sol \qed
+\sol By the symmetry property of asymptotics, we have $f(n) = \Theta(g(n))$ if and only if $g(n) = \Theta(f(n))$. Since $k \ln k = \Theta(n)$, we can use the symmetry property to obtain $n = \Theta(k \ln k)$. Taking the logarithm of both sides, we obtain $\ln n = \Theta(\ln k + \ln \ln k) = \Theta(\ln k)$. Dividing $n = \Theta(k \ln k)$ by this yields $\frac{n}{\ln n} = \Theta(k)$. Using the symmetry property again yields $k = \Theta(\frac{n}{\ln n})$.\qed
 
 \section{Problems}
 
