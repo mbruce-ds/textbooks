@@ -106,7 +106,7 @@ For $n! = o(n^n)$, let $c > 0$ and let $n_0 = \max\{2\cdot \lceil c \rceil, 4\}$
 
 \sol \qed
 
-\qn{3.2-5 *} Which is asymptotically larger: $\lg(\lg * n)$ or $\lg * (\lg n)$
+\qn{3.2-5 *} Which is asymptotically larger: $\lg(\lg ^* n)$ or $\lg ^* (\lg n)$
 
 \sol \qed
 
@@ -157,15 +157,15 @@ Indicate, for each pair of expressions $(A,B)$ in the table below, whether $A$ i
 \,
 
 \begin{center}
-\begin{tabular}{|l|l|l|l|l|l|l|}
+\begin{tabular}{|l|l||l|l|l|l|l|}
     \hline
-    A           & B                 & $O$ & $o$ & $\Omega$ & $\omega$ & $\Theta$ \\\hline
-    $\lg^k n$   & $n^{\varepsilon}$ &     &     &          &          &                         \\\hline
-    $n^k$       & $c^n$             &     &     &          &          &                         \\\hline
-    $\sqrt{n}$  & $n^{\sin n}$      &     &     &          &          &                         \\\hline
-    $2^n$       & $2^{n/2}$         &     &     &          &          &                         \\\hline
-    $n^{\lg c}$ & $c^{\lg n}$       &     &     &          &          &                         \\\hline
-    $\lg(n!)$   & $\lg(n^n)$        &     &     &          &          &                        \\\hline
+    A           & B                 & $O$ & $o$ & $\Omega$ & $\omega$ & $\Theta$ \\\hline\hline
+    $\lg^k n$   & $n^{\varepsilon}$ &  Yes   & Yes    &  No        &   No       &   No                      \\\hline
+    $n^k$       & $c^n$             &   Yes  &  Yes   &  No        &  No        &   No                      \\\hline
+    $\sqrt{n}$  & $n^{\sin n}$      &   No  & No    &   No       & No         &  No                       \\\hline
+    $2^n$       & $2^{n/2}$         &  No   &  No   & Yes         & Yes         & No                        \\\hline
+    $n^{\lg c}$ & $c^{\lg n}$       &  Yes   & No    &  Yes        &   No       & Yes                        \\\hline
+    $\lg(n!)$   & $\lg(n^n)$        &  Yes   &  No   &   Yes       &   No       &  Yes                      \\\hline
 \end{tabular}
 \end{center}
 \qed
@@ -193,7 +193,7 @@ Indicate, for each pair of expressions $(A,B)$ in the table below, whether $A$ i
 
 Let $f(n)$ and $g(n)$ be asymptotically positive functions. Prove or disprove each of the following conjectures.
 
-\begin{enumerate}
+\begin{enumerate}[(a)]
     \item $f(n) = O(g(n))$ implies $g(n) = O(f(n))$.
     \item $f(n) + g(n) = \Theta(\min(f(n), g(n)))$.
     \item $f(n) = O(g(n))$ implies $\lg(f(n)) = O(\lg(g(n)))$, where $\lg(g(n)) \geq 1$ and $f(n) \geq 1$ for all sufficiently large $n$.
@@ -204,7 +204,13 @@ Let $f(n)$ and $g(n)$ be asymptotically positive functions. Prove or disprove ea
     \item $f(n) + o(f(n)) = \Theta(f(n))$.
 \end{enumerate}
 
-\sol \qed
+\sol \begin{enumerate}[(a)]
+    \item False. Let $f(n) = n$ and $g(n) = n^2$.
+    \item False. Let $f(n) = n$ and $g(n) = n^2$.
+    \item alkfj
+    \item alkfj
+    \item False. Let $f(n) = \frac{1}{n}$.
+\end{enumerate}\qed
 
 \qn{3-5} \textbf{Variations on $O$ and $\Omega$}
 
